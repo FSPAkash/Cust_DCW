@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import config from './config';
 import Sidebar from './components/Sidebar';
 import PigmentSelector from './components/PigmentSelector';
 import ProductionPanel from './components/ProductionPanel';
@@ -25,8 +26,8 @@ function Dashboard({ user, onLogout }) {
   const loadData = async () => {
     try {
       const [pRes, oRes] = await Promise.all([
-        fetch('/api/database/pigments'),
-        fetch('/api/database/orders')
+        fetch(`${config.API_URL}/api/database/pigments`),
+        fetch(`${config.API_URL}/api/database/orders`)
       ]);
       const p = await pRes.json();
       const o = await oRes.json();
@@ -42,7 +43,7 @@ function Dashboard({ user, onLogout }) {
     setResults(null);
     const wait = new Promise(r => setTimeout(r, 1200));
     try {
-      const res = await fetch('/api/match/pigment-to-orders', {
+      const res = await fetch(`${config.API_URL}/api/match/pigment-to-orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pigmentId: id })

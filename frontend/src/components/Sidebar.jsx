@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import config from '../config';
 
 const InfoBtn = ({ tip }) => (
   <button className="info-btn">i<span className="info-tip">{tip}</span></button>
@@ -15,7 +16,10 @@ function Sidebar({ user, onLogout, pigmentCount, orderCount, onDatabaseUpdate })
     const fd = new FormData();
     fd.append('file', file);
     try {
-      const res = await fetch(`/api/database/upload/${type}`, { method: 'POST', body: fd });
+      const res = await fetch(`${config.API_URL}/api/database/upload/${type}`, { 
+        method: 'POST', 
+        body: fd 
+      });
       const d = await res.json();
       setMsg(d.success ? { t: 'success', m: `${d.count} loaded` } : { t: 'error', m: d.message });
       if (d.success) onDatabaseUpdate();

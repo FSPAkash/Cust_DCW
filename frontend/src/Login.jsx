@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import config from './config';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch(`${config.API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -108,8 +109,6 @@ function Login({ onLogin }) {
                 {loading ? 'Signing in...' : 'Sign In'}
               </button>
             </form>
-
-
           </div>
 
           <div className="login-powered">
