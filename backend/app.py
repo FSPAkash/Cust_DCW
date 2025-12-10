@@ -36,6 +36,12 @@ databases = {
     'orders': None
 }
 
+# Priority calibration parameters
+# Only consider orders with Delta E below this as candidates for priority
+DELTA_E_MAX_FOR_PRIORITY = 1.5
+# Orders must be within this Delta E difference to be considered a "tie"
+DELTA_E_TIE_THRESHOLD = 0.2
+
 
 def lab_to_hex(L, a, b):
     """Convert L*a*b* to HEX color."""
@@ -101,6 +107,97 @@ def get_angular_distance_interpretation(angle_deg):
         return "Poor", "Different color direction"
 
 
+def assign_priority_for_close_matches(matches, delta_e_key='deltaE'):
+    """
+    Assign priority tag ONLY when there's a true tie-breaker situation:
+    1. Orders must have Delta E < DELTA_E_MAX_FOR_PRIORITY (good matches)
+    2. Orders must be within DELTA_E_TIE_THRESHOLD of each other (true tie)
+    3. The order with higher tonnage gets priority
+    
+    Args:
+        matches: List of match dictionaries
+        delta_e_key: Key name for the Delta E value in the dictionary
+    
+    Returns:
+        Updated matches list with priority field (None for most, 'Priority' for tie-breaker winner)
+    """
+    # Initialize all priorities as None
+    for match in matches:
+        match['priority'] = None
+    
+    if len(matches) < 2:
+        return matches
+    
+    # Filter to only good matches (Delta E < max threshold)
+    good_match_indices = []
+    for i, match in enumerate(matches):
+        delta_e = match.get(delta_e_key)
+        if delta_e is not None and delta_e < DELTA_E_MAX_FOR_PRIORITY:
+            good_match_indices.append(i)
+    
+    if len(good_match_indices) < 2:
+        # Not enough good matches to have a tie
+        return matches
+    
+    # Find groups of ties among good matches
+    tie_groups = []
+    used_indices = set()
+    
+    for i in good_match_indices:
+        if i in used_indices:
+            continue
+        
+        current_delta_e = matches[i].get(delta_e_key, float('inf'))
+        group = [i]
+        
+        for j in good_match_indices:
+            if j <= i or j in used_indices:
+                continue
+            
+            other_delta_e = matches[j].get(delta_e_key, float('inf'))
+            
+            # Check if within tie threshold
+            if abs(other_delta_e - current_delta_e) <= DELTA_E_TIE_THRESHOLD:
+                group.append(j)
+        
+        if len(group) > 1:
+            # Verify all members are within threshold of each other
+            valid_group = True
+            for idx_a in group:
+                for idx_b in group:
+                    if idx_a != idx_b:
+                        delta_a = matches[idx_a].get(delta_e_key, float('inf'))
+                        delta_b = matches[idx_b].get(delta_e_key, float('inf'))
+                        if abs(delta_a - delta_b) > DELTA_E_TIE_THRESHOLD:
+                            valid_group = False
+                            break
+                if not valid_group:
+                    break
+            
+            if valid_group:
+                tie_groups.append(group)
+                used_indices.update(group)
+    
+    # For each tie group, assign priority to highest tonnage
+    for group in tie_groups:
+        group_matches = [(idx, matches[idx]) for idx in group]
+        
+        # Sort by tonnage descending
+        group_matches.sort(key=lambda x: x[1].get('requiredTonnage', 0), reverse=True)
+        
+        # Only the highest tonnage gets priority
+        highest_tonnage_idx = group_matches[0][0]
+        highest_tonnage = group_matches[0][1].get('requiredTonnage', 0)
+        
+        # Make sure there's actually a tonnage difference worth noting
+        second_tonnage = group_matches[1][1].get('requiredTonnage', 0) if len(group_matches) > 1 else 0
+        
+        if highest_tonnage > second_tonnage:
+            matches[highest_tonnage_idx]['priority'] = 'Priority'
+    
+    return matches
+
+
 def generate_sample_pigments():
     """Generate sample pigment database with inventory."""
     np.random.seed(42)
@@ -146,7 +243,6 @@ def generate_sample_orders():
             'a': a,
             'b': b,
             'RequiredTonnage': round(np.random.uniform(2, 40), 2),
-            'Priority': np.random.choice(['High', 'Medium', 'Low']),
             'HexColor': lab_to_hex(l, a, b)
         })
     
@@ -309,8 +405,6 @@ def upload_orders():
                 df['OrderID'] = [f'ORD-2024-{str(i+1).zfill(4)}' for i in range(len(df))]
             if 'CustomerName' not in df.columns:
                 df['CustomerName'] = 'Unknown Customer'
-            if 'Priority' not in df.columns:
-                df['Priority'] = 'Medium'
             
             df['HexColor'] = df.apply(lambda row: lab_to_hex(row['L'], row['a'], row['b']), axis=1)
             databases['orders'] = df
@@ -344,6 +438,11 @@ def match_pigment_to_orders():
     euclidean_matches = calculate_euclidean_matches(pigment_lab, databases['orders'])
     cosine_matches = calculate_cosine_matches(pigment_lab, databases['orders'])
     knn_matches = calculate_knn_matches(pigment_lab, databases['orders'])
+    
+    # Assign priority only for true tie-breaker situations
+    euclidean_matches = assign_priority_for_close_matches(euclidean_matches, delta_e_key='deltaE')
+    cosine_matches = assign_priority_for_close_matches(cosine_matches, delta_e_key='euclideanDistance')
+    knn_matches = assign_priority_for_close_matches(knn_matches, delta_e_key='rawDistance')
     
     # Analyze consensus
     consensus = analyze_consensus(euclidean_matches, cosine_matches, knn_matches)
@@ -397,7 +496,6 @@ def calculate_euclidean_matches(pigment_lab, orders_db, n_matches=3):
             'b': float(order['b']),
             'hexColor': str(order.get('HexColor', lab_to_hex(order['L'], order['a'], order['b']))),
             'requiredTonnage': float(order.get('RequiredTonnage', 0)),
-            'priority': str(order.get('Priority', 'Medium')),
             'deltaE': round(delta_e, 3),
             'matchPercentage': round(match_pct, 1),
             'interpretation': interpretation,
@@ -434,7 +532,6 @@ def calculate_cosine_matches(pigment_lab, orders_db, n_matches=3):
             'b': float(order['b']),
             'hexColor': str(order.get('HexColor', lab_to_hex(order['L'], order['a'], order['b']))),
             'requiredTonnage': float(order.get('RequiredTonnage', 0)),
-            'priority': str(order.get('Priority', 'Medium')),
             'similarity': round(similarity, 4),
             'angularDistance': round(angular_distance, 2),
             'euclideanDistance': round(euclidean_dist, 2),
@@ -477,7 +574,6 @@ def calculate_knn_matches(pigment_lab, orders_db, n_matches=3):
             'b': float(order['b']),
             'hexColor': str(order.get('HexColor', lab_to_hex(order['L'], order['a'], order['b']))),
             'requiredTonnage': float(order.get('RequiredTonnage', 0)),
-            'priority': str(order.get('Priority', 'Medium')),
             'normalizedDistance': round(distance, 4),
             'rawDistance': round(raw_dist, 2),
             'matchPercentage': round(match_pct, 1)
@@ -501,16 +597,19 @@ def analyze_consensus(euclidean_matches, cosine_matches, knn_matches):
                 'b': match['b'],
                 'hexColor': match['hexColor'],
                 'requiredTonnage': match['requiredTonnage'],
-                'priority': match['priority'],
+                'priority': None,
                 'euclideanRank': None,
                 'cosineRank': None,
                 'knnRank': None,
                 'euclideanDeltaE': None,
                 'cosineAngular': None,
-                'knnDistance': None
+                'knnDistance': None,
+                'matchPercentage': None
             }
         all_orders[order_id]['euclideanRank'] = match['rank']
         all_orders[order_id]['euclideanDeltaE'] = match['deltaE']
+        if match.get('priority'):
+            all_orders[order_id]['priority'] = match['priority']
     
     for match in cosine_matches:
         order_id = match['orderId']
@@ -523,13 +622,14 @@ def analyze_consensus(euclidean_matches, cosine_matches, knn_matches):
                 'b': match['b'],
                 'hexColor': match['hexColor'],
                 'requiredTonnage': match['requiredTonnage'],
-                'priority': match['priority'],
+                'priority': None,
                 'euclideanRank': None,
                 'cosineRank': None,
                 'knnRank': None,
                 'euclideanDeltaE': None,
                 'cosineAngular': None,
-                'knnDistance': None
+                'knnDistance': None,
+                'matchPercentage': None
             }
         all_orders[order_id]['cosineRank'] = match['rank']
         all_orders[order_id]['cosineAngular'] = match['angularDistance']
@@ -545,16 +645,19 @@ def analyze_consensus(euclidean_matches, cosine_matches, knn_matches):
                 'b': match['b'],
                 'hexColor': match['hexColor'],
                 'requiredTonnage': match['requiredTonnage'],
-                'priority': match['priority'],
+                'priority': None,
                 'euclideanRank': None,
                 'cosineRank': None,
                 'knnRank': None,
                 'euclideanDeltaE': None,
                 'cosineAngular': None,
-                'knnDistance': None
+                'knnDistance': None,
+                'matchPercentage': None
             }
         all_orders[order_id]['knnRank'] = match['rank']
         all_orders[order_id]['knnDistance'] = match['normalizedDistance']
+        # Store KNN match percentage
+        all_orders[order_id]['matchPercentage'] = match.get('matchPercentage')
     
     results = []
     for order_id, data in all_orders.items():
@@ -581,6 +684,17 @@ def analyze_consensus(euclidean_matches, cosine_matches, knn_matches):
         results.append(data)
     
     results.sort(key=lambda x: x['consensusScore'], reverse=True)
+    
+    # Re-apply priority logic to consensus results using euclidean Delta E
+    for result in results:
+        result['deltaE'] = result.get('euclideanDeltaE') or float('inf')
+    
+    results = assign_priority_for_close_matches(results, delta_e_key='deltaE')
+    
+    # Clean up temporary deltaE key
+    for result in results:
+        if 'deltaE' in result:
+            del result['deltaE']
     
     return results
 
@@ -614,13 +728,13 @@ def generate_production_recommendation(pigment, top_orders, available_tonnage):
             'required': required,
             'canFulfill': round(fulfill_amount, 2),
             'status': status,
-            'priority': order['priority'],
+            'priority': order.get('priority'),
             'fulfillmentPercentage': round((fulfill_amount / required) * 100, 1) if required > 0 else 0
         })
     
     shortage = max(0, total_required - available_tonnage)
-    high_priority_orders = [o for o in top_orders if o['priority'] == 'High']
-    high_priority_required = sum(o['requiredTonnage'] for o in high_priority_orders)
+    priority_orders = [o for o in top_orders if o.get('priority') == 'Priority']
+    priority_required = sum(o['requiredTonnage'] for o in priority_orders)
     
     if can_fulfill_all:
         recommendation_status = 'success'
@@ -637,15 +751,17 @@ def generate_production_recommendation(pigment, top_orders, available_tonnage):
             f"Available: {available_tonnage:.2f} tonnes",
             f"Total Required: {total_required:.2f} tonnes",
             f"Shortage: {shortage:.2f} tonnes",
-            "Consider prioritizing high-priority orders first"
         ]
+        if priority_orders:
+            action_items.append(f"Priority order requires: {priority_required:.2f} tonnes")
     else:
         recommendation_status = 'critical'
         recommendation_text = f"No inventory available. Production of {total_required:.2f} tonnes required."
         action_items = [
             f"Total production needed: {total_required:.2f} tonnes",
-            "Prioritize based on order priority levels"
         ]
+        if priority_orders:
+            action_items.append(f"Priority order requires: {priority_required:.2f} tonnes")
     
     return {
         'status': recommendation_status,
@@ -657,7 +773,7 @@ def generate_production_recommendation(pigment, top_orders, available_tonnage):
         'fulfillmentDetails': fulfillment_details,
         'actionItems': action_items,
         'productionRecommendation': round(shortage * 1.1, 2) if shortage > 0 else 0,
-        'highPriorityRequired': round(high_priority_required, 2)
+        'priorityRequired': round(priority_required, 2)
     }
 
 
@@ -667,5 +783,6 @@ if __name__ == '__main__':
     print("=" * 50)
     print(f"Pigments loaded: {len(databases['pigments']) if databases['pigments'] is not None else 0}")
     print(f"Orders loaded: {len(databases['orders']) if databases['orders'] is not None else 0}")
+    print(f"Priority thresholds: Max Delta E = {DELTA_E_MAX_FOR_PRIORITY}, Tie threshold = {DELTA_E_TIE_THRESHOLD}")
     print("=" * 50)
     app.run(debug=True, port=5000)
