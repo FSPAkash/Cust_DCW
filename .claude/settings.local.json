@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(npx react-scripts build)",
+      "Bash(git checkout:*)"
+    ]
+  }
+}

@@ -1,0 +1,407 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 12:49:09] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:49:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:49:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:49:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:49:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:49:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:49:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:06] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:06] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:06] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:06] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:06] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:06] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:15] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:37] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:38] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:38] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:38] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:40] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 12:50:41] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:36] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:36] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:56] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:57] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:57] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:57] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:58:57] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:02] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:03] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:28] "POST /api/admin/current-standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:28] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:28] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:29] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:29] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:29] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 13:59:55] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:09] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:11] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:11] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:25] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:26] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:26] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:26] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:26] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:28] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:28] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:33] "POST /api/admin/current-standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:34] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:34] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:34] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:34] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:34] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:35] "POST /api/admin/current-standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:35] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:35] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:36] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:36] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:36] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:53] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:54] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:55] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:57] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:00:57] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:04] "POST /api/admin/current-standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:05] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:05] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:05] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:05] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:05] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:06] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:07] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:16] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:44] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:44] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:45] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:46] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:46] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:46] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:59] "POST /api/admin/current-standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:59] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:01:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:02:15] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:09] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:09] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:03:10] "GET /api/notifications HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\aiohappyeyeballs\\__init__.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 14:12:27] "GET /api/standards HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\joblib\\externals\\loky\\backend\\context.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 14:20:43] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:20:47] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:10] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:10] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:11] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:12] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:22:12] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:11] "POST /api/admin/current-standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:11] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:11] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:12] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:12] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:12] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:23:20] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:29:15] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:29:15] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:29:15] "GET /api/notifications HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 14:40:00] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:40:00] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:40:00] "GET /api/notifications HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 14:42:03] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:03] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:03] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:03] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:03] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:03] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:03] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 14:45:07] "POST /api/analyze/standard HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\update_dummy_invoice_tests.py.tmp.42344.1777368765336', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 15:03:50] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:03:50] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:03:50] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:03:50] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:03:50] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:03:50] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:03:57] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:13] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:13] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:13] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:19] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:19] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:19] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:34] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:34] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:34] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:41] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:41] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:41] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:49] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:49] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:49] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:19:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:11] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:11] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:11] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:24] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:24] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:24] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:24] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:24] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:24] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:46] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:47] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:20:47] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:21:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:21:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:21:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:21:59] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:21:59] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:21:59] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:22:06] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:22:06] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:22:06] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:23:54] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:23:55] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:23:55] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:18] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:18] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:18] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:19] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:19] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:19] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:25:26] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:27:08] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:30:31] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:30:31] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:30:31] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:35:47] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:35:47] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:35:47] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:37:09] "GET /api/datasets HTTP/1.1" 404 -
+127.0.0.1 - - [28/Apr/2026 15:37:26] "POST /api/analyze/standard HTTP/1.1" 404 -
+127.0.0.1 - - [28/Apr/2026 15:37:42] "POST /api/analyze/standard HTTP/1.1" 404 -
+127.0.0.1 - - [28/Apr/2026 15:39:01] "POST /api/analyze/standard HTTP/1.1" 404 -
+127.0.0.1 - - [28/Apr/2026 15:39:06] "POST /api/analyze/standard HTTP/1.1" 404 -
+127.0.0.1 - - [28/Apr/2026 15:39:16] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:39:31] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:05] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:23] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:23] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:23] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:45] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:45] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:40:45] "GET /api/invoices HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 15:41:19] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:19] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:19] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:37] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:37] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:37] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:50] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:50] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:41:50] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:42:47] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:02] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:49] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:49] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:50] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:50] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:50] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:50] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:43:58] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:37] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:37] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:37] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:37] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:37] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:37] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:48:45] "POST /api/analyze/standard HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\update_dummy_invoice_tests.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 15:51:39] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:52:33] "POST /api/analyze/standard HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\DCW SIOP\\backend\\app.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 832-028-281
+127.0.0.1 - - [28/Apr/2026 15:57:16] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:58:02] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:58:02] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:58:02] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:58:02] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:58:02] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:58:02] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:59:52] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:59:52] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:59:52] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:59:52] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:59:52] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 15:59:52] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:00:01] "POST /api/analyze/standard HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:55] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:55] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:55] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/admin/customers?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/admin/capabilities HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/notifications HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/standards HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:01:56] "GET /api/invoices HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:02:00] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+127.0.0.1 - - [28/Apr/2026 16:02:00] "GET /api/admin/current-standards?username=admin HTTP/1.1" 200 -
+ * Detected change in 'C:\\Users\\AkashPatil\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\anyio\\__init__.py', reloading

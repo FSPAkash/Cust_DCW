@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ':*)",
+      "Bash(npx --no-install eslint src/Dashboard.jsx src/components/ProductionPanel.jsx src/components/ResultsTabs.jsx src/components/Sidebar.jsx)",
+      "Bash(node -e ':*)",
+      "Bash(npx eslint:*)",
+      "Bash(python -c \"import app; print\\('backend OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('app.py'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(node -e \"require\\('@babel/parser'\\).parse\\(require\\('fs'\\).readFileSync\\('src/components/MatchingFlowTab.jsx','utf8'\\), {sourceType:'module', plugins:['jsx']}\\); console.log\\('OK'\\)\")",
+      "Bash(awk -F',' 'NR>1{print $4}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/lot_test_results.csv\")",
+      "Bash(awk -F',' 'NR>1{print $4}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/inventory_lots.csv\")",
+      "Bash(awk -F',' 'NR>1{print $3}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/inventory_lots.csv\")",
+      "Bash(python -c ' *)",
+      "Bash(awk -F',' 'NR>1{print $6\"|\"$7}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/lot_test_results.csv\")",
+      "Bash(awk -F',' 'NR>1{print $3\"|\"$4\"|\"$6}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/lot_test_results.csv\")",
+      "Bash(awk -F',' 'NR>1{print $7\"|\"$3\"|\"$4\"|\"$11\"|\"$12}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/dummy_invoice_lines.csv\")",
+      "Bash(awk -F',' 'NR>1{print $5\"|\"$3\"|\"$6}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/lot_test_results.csv\")",
+      "Bash(awk -F',' 'NR>1{print $7\"|\"$8}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/bulk_dummy_invoice_lines_240.csv\")",
+      "Bash(awk -F',' 'NR>1{print $2\"|\"$3}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/bulk_dummy_invoice_lines_240.csv\")",
+      "Bash(python update_dummy_invoice_tests.py)",
+      "Bash(awk -F',' 'NR==1 || NR<=12 {print $22\"|\"$2\"|\"$3\"|\"$6}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/dummy_invoice_lines.csv\")",
+      "Bash(awk -F',' 'NR==1 || NR<=20 {print $21\"|\"$2\"|\"$3\"|\"$6}' \"/c/Users/AkashPatil/DCW SIOP/backend/stitched_outputs/bulk_dummy_invoice_lines_240.csv\")",
+      "Bash(curl -s http://localhost:5000/api/datasets)",
+      "Bash(curl -s http://localhost:5001/api/datasets)",
+      "Bash(curl -s -X POST http://localhost:5000/api/analyze/standard -H 'Content-Type: application/json' -d '{\"standardCode\":\"325\",\"toleranceMode\":\"strict\"}')",
+      "Bash(curl -s -X POST http://localhost:5000/api/analyze/standard -H 'Content-Type: application/json' -d '{\"standardCode\":\"3300\",\"toleranceMode\":\"strict\"}')",
+      "Bash(node -e ' *)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //PID 11096)",
+      "Bash(taskkill //F //PID 33944)",
+      "Bash(python -c \"import docx; print\\(docx.__version__\\)\")",
+      "Bash(python \"c:/Users/AkashPatil/DCW SIOP/build_manual.py\")"
+    ]
+  }
+}

@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sage: #6b9c76;
+      --sage-dark: #4a7d56;
+      --sage-light: #98c4a3;
+      --sage-subtle: rgba(107,156,118,0.08);
+      --sage-border: rgba(107,156,118,0.18);
+      --sage-glow: rgba(107,156,118,0.25);
+      --mint: #7bbf8f;
+      --mint-light: #b5e0c4;
+      --purple: #8b7ec8;
+      --purple-dark: #6b5fa8;
+      --purple-light: #b0a6dc;
+      --purple-subtle: rgba(139,126,200,0.08);
+      --purple-border: rgba(139,126,200,0.18);
+      --purple-glow: rgba(139,126,200,0.25);
+      --stone: #8a8a80;
+      --stone-light: #b8b8b0;
+      --warm-grey: #9e9a94;
+      --green-done: #5aab6a;
+      --green-done-bg: rgba(90,171,106,0.10);
+      --red: #c4706a;
+      --red-bg: rgba(196,112,106,0.08);
+      --red-border: rgba(196,112,106,0.16);
+      --red-glow: rgba(196,112,106,0.20);
+      --amber: #c4a24e;
+      --amber-bg: rgba(196,162,78,0.08);
+      --amber-border: rgba(196,162,78,0.18);
+      --bg: #ededea;
+      --text-primary: #2a2a26;
+      --text-secondary: rgba(42,42,38,0.58);
+      --text-tertiary: rgba(42,42,38,0.34);
+      --glass: rgba(255,255,255,0.35);
+      --glass-border: rgba(255,255,255,0.50);
+      --glass-strong: rgba(255,255,255,0.55);
+      --glass-border-strong: rgba(255,255,255,0.68);
+      --shadow: 0 8px 32px rgba(42,42,38,0.05), 0 2px 8px rgba(42,42,38,0.02);
+      --shadow-hover: 0 16px 48px rgba(42,42,38,0.07), 0 4px 12px rgba(42,42,38,0.03);
+      --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.75), inset 0 -1px 0 rgba(0,0,0,0.01);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --radius-xs: 8px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+      
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      font-size: 15px;
+      background: var(--bg);
+
+      background-attachment: fixed;
+    }
+
+    .bg-layer {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 100% 60% at 20% -10%, rgba(107,156,118,0.16), transparent 60%),
+        radial-gradient(ellipse 80% 55% at 85% 10%, rgba(139,126,200,0.13), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 10% 80%, rgba(139,126,200,0.08), transparent 50%),
+        radial-gradient(ellipse 90% 45% at 75% 80%, rgba(107,156,118,0.07), transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 45%, rgba(255,255,255,0.15), transparent 50%);
+    }
+
+
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    button:disabled { cursor: not-allowed; opacity: 0.35; }
+    input, select, textarea { font-family: inherit; font-size: inherit; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.06); border-radius: 10px; }
+
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(50px) saturate(1.8);
+      -webkit-backdrop-filter: blur(50px) saturate(1.8);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow), var(--shadow-inset);
+      position: relative;
+    }
+    .glass::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(165deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.03) 45%, transparent 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .glass > * { position: relative; z-index: 2; }
+    .glass:hover { box-shadow: var(--shadow-hover), var(--shadow-inset); }
+
+    .glass-strong {
+      background: var(--glass-strong);
+      backdrop-filter: blur(60px) saturate(2.0);
+      -webkit-backdrop-filter: blur(60px) saturate(2.0);
+      border: 1px solid var(--glass-border-strong);
+      box-shadow: var(--shadow), var(--shadow-inset);
+      position: relative;
+    }
+    .glass-strong::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.05) 45%, transparent 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .glass-strong > * { position: relative; z-index: 2; }
+    .glass-strong:hover { box-shadow: var(--shadow-hover), var(--shadow-inset); }
+
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(237,237,234,0.55);
+      backdrop-filter: blur(60px) saturate(2.0);
+      -webkit-backdrop-filter: blur(60px) saturate(2.0);
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      animation: fadeDown 0.5s cubic-bezier(0.16,1,0.3,1) both;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.03), inset 0 -1px 0 rgba(255,255,255,0.5);
+    }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }
+
+    .header-inner {
+      max-width: 1400px; margin: 0 auto; padding: 0 36px;
+      height: 80px; display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .header-left { display: flex; align-items: center; gap: 16px; }
+    .brand-marks { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    }
+    .brand-mark img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    }
+    .brand-separator {
+      width: 2px; height: 28px;
+      background: linear-gradient(180deg, transparent, rgba(139,126,200,0.8), transparent);
+    }
+    .header-title {
+      font-size: 17px; font-weight: 700; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--sage-dark), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .header-right { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+
+    .header-center {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .week-dial {
+      display: flex; align-items: center; gap: 0;
+      background: rgba(255,255,255,0.38);
+      backdrop-filter: blur(40px) saturate(1.8);
+      -webkit-backdrop-filter: blur(40px) saturate(1.8);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 50px; padding: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.7);
+      user-select: none; transition: all 0.3s;
+    }
+    .week-dial:hover {
+      box-shadow: 0 6px 28px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.7), 0 0 34px rgba(139,126,200,0.06);
+      background: rgba(255,255,255,0.45);
+    }
+    .dial-arrow {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-tertiary); transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
+    }
+    .dial-arrow:not(:disabled):hover { background: rgba(139,126,200,0.12); color: var(--purple); transform: scale(1.12); }
+    .dial-arrow:active:not(:disabled) { transform: scale(0.88); }
+    .dial-center {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2px 20px; min-width: 210px; cursor: pointer;
+      border-radius: 40px; transition: all 0.25s;
+    }
+    .dial-center:hover { background: rgba(0,0,0,0.02); }
+    .dial-label {
+      font-size: 13px; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--text-primary); white-space: nowrap; line-height: 1.3;
+    }
+    .dial-sublabel {
+      font-size: 9px; font-weight: 500; color: var(--text-tertiary);
+      letter-spacing: 0.02em; margin-top: 1px;
+    }
+    .this-week-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--purple), var(--sage));
+      color: white; font-size: 7px; font-weight: 700;
+      padding: 1px 7px; border-radius: 10px; margin-left: 7px;
+      letter-spacing: 0.05em; vertical-align: middle;
+      animation: badgePop 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes badgePop { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+    .week-dropdown {
+      position: absolute; top: calc(100% + 10px); left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      width: 320px; max-height: 400px; overflow-y: auto;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(70px) saturate(2.0);
+      -webkit-backdrop-filter: blur(70px) saturate(2.0);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 22px;
+      box-shadow: 0 28px 90px rgba(0,0,0,0.10), 0 4px 18px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.7);
+      opacity: 0; visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      z-index: 200; padding: 10px;
+    }
+    .week-dropdown::before {
+      content: ''; position: absolute;
+      top: -6px; left: 50%; transform: translateX(-50%) rotate(45deg);
+      width: 12px; height: 12px;
+      background: rgba(255,255,255,0.72);
+      border-top: 1px solid rgba(255,255,255,0.6);
+      border-left: 1px solid rgba(255,255,255,0.6);
+    }
+    .week-dropdown.open { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+    .wd-month-label {
+      font-size: 9px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--purple); padding: 12px 14px 5px;
+    }
+    .wd-week-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 13px;
+      cursor: pointer; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    }
+    .wd-week-item:hover { background: rgba(139,126,200,0.07); color: var(--text-primary); transform: translateX(4px); }
+    .wd-week-item.selected { background: rgba(139,126,200,0.12); color: var(--purple-dark); font-weight: 600; }
+    .wd-week-item.current::after {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--purple); flex-shrink: 0; margin-left: auto;
+      animation: pulse 2s ease infinite;
+    }
+
+    .header-btn {
+      height: 36px; padding: 0 16px; border-radius: 20px;
+      font-size: 12px; font-weight: 600; letter-spacing: -0.01em;
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      display: flex; align-items: center; gap: 7px;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    .header-btn:hover { transform: translateY(-1px); }
+    .admin-toggle {
+      background: rgba(139,126,200,0.08); color: var(--purple);
+      border: 1px solid rgba(139,126,200,0.18);
+    }
+    .admin-toggle:hover { background: rgba(139,126,200,0.15); }
+    .admin-toggle.unlocked {
+      background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+      color: white; border-color: var(--purple);
+      box-shadow: 0 2px 14px var(--purple-glow);
+      animation: adminGlow 2s ease-in-out infinite;
+    }
+    @keyframes adminGlow {
+      0%, 100% { box-shadow: 0 2px 14px var(--purple-glow); }
+      50% { box-shadow: 0 4px 28px rgba(139,126,200,0.38); }
+    }
+    .pdf-btn {
+      background: rgba(255,255,255,0.3); color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .pdf-btn:hover { background: rgba(255,255,255,0.45); }
+
+    .save-indicator {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      padding: 10px 20px; border-radius: 22px;
+      background: linear-gradient(135deg, var(--sage), var(--purple));
+      color: white; font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+      opacity: 0; transform: translateY(8px) scale(0.9);
+      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+      box-shadow: 0 4px 24px rgba(139,126,200,0.3);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    .save-indicator.show { opacity: 1; transform: translateY(0) scale(1); }
+
+    .main-wrap {
+      max-width: 1400px; margin: 0 auto; padding: 0 36px 70px;
+      position: relative; z-index: 1;
+    }
+
+    .status-strip {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 22px; border-radius: var(--radius); margin-top: 20px;
+      animation: fadeIn 0.5s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+    }
+    .status-dot {
+      width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+    }
+    .status-dot.green { background: var(--sage); box-shadow: 0 0 8px var(--sage-glow); animation: statusPulseGreen 2.5s ease-in-out infinite; }
+    .status-dot.amber { background: var(--amber); box-shadow: 0 0 8px rgba(196,162,78,0.25); animation: statusPulseAmber 2.5s ease-in-out infinite; }
+    .status-dot.red { background: var(--red); box-shadow: 0 0 8px var(--red-glow); animation: statusPulseRed 1.5s ease-in-out infinite; }
+    @keyframes statusPulseGreen {
+      0%, 100% { box-shadow: 0 0 8px var(--sage-glow); transform: scale(1); }
+      50% { box-shadow: 0 0 18px rgba(107,156,118,0.4); transform: scale(1.2); }
+    }
+    @keyframes statusPulseAmber {
+      0%, 100% { box-shadow: 0 0 8px rgba(196,162,78,0.25); transform: scale(1); }
+      50% { box-shadow: 0 0 18px rgba(196,162,78,0.45); transform: scale(1.2); }
+    }
+    @keyframes statusPulseRed {
+      0%, 100% { box-shadow: 0 0 8px var(--red-glow); transform: scale(1); }
+      50% { box-shadow: 0 0 22px rgba(196,112,106,0.5); transform: scale(1.3); }
+    }
+    .status-tag { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .status-tag.green { color: var(--sage-dark); }
+    .status-tag.amber { color: var(--amber); }
+    .status-tag.red { color: var(--red); }
+    .status-select {
+      font-size: 12px; font-weight: 600; padding: 5px 10px;
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 9px;
+      background: rgba(255,255,255,0.4); color: var(--text-primary);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      outline: none; cursor: pointer; transition: all 0.2s;
+    }
+    .status-select:hover { border-color: var(--purple-border); background: rgba(255,255,255,0.55); }
+    .status-summary {
+      font-size: 14px; color: var(--text-secondary); flex: 1;
+      outline: none; min-height: 1em; transition: color 0.2s;
+    }
+    .status-summary:focus { color: var(--text-primary); }
+
+    .metrics-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin-top: 14px;
+    }
+    .metric-pill {
+    border-radius: var(--radius-sm); padding: 18px 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 6px;
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    animation: metricSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(40px) saturate(1.8); -webkit-backdrop-filter: blur(40px) saturate(1.8);
+    border: 1px solid rgba(255,255,255,0.45);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+    }
+    .metric-info { display: flex; flex-direction: column; align-items: center; }
+    .metric-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-align: center; }
+    .metric-pill::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(165deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 30%, transparent 60%);
+      pointer-events: none;
+    }
+    .metric-pill > * { position: relative; z-index: 1; }
+    .metric-pill:nth-child(1) { animation-delay: 0.2s; }
+    .metric-pill:nth-child(2) { animation-delay: 0.28s; }
+    .metric-pill:nth-child(3) { animation-delay: 0.36s; }
+    .metric-pill:nth-child(4) { animation-delay: 0.44s; }
+    @keyframes metricSlideUp {
+      from { opacity: 0; transform: translateY(22px) scale(0.94); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .metric-pill:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 32px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.7); }
+    .metric-num {
+      font-size: 32px; font-weight: 700; letter-spacing: -0.03em;
+      font-family: 'JetBrains Mono', monospace; transition: transform 0.3s;
+    }
+    .metric-pill:hover .metric-num { transform: scale(1.12); }
+    .metric-num.wins { color: var(--sage); }
+    .metric-num.completed { color: var(--green-done); }
+    .metric-num.in-progress { color: var(--purple); }
+    .metric-num.blocked { color: var(--red); }
+    .metric-info { display: flex; flex-direction: column; }
+    .metric-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+
+    .admin-bar {
+      display: flex; align-items: center; gap: 9px;
+      margin-top: 18px; padding: 10px 18px;
+      background: rgba(139,126,200,0.06);
+      backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border: 1px dashed rgba(139,126,200,0.22);
+      border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 600; color: var(--purple);
+      animation: fadeIn 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .admin-bar-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--purple); animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .gantt-container {
+      margin-top: 18px; border-radius: var(--radius);
+      overflow: hidden;
+      animation: ganttSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+      background: rgba(255,255,255,0.32);
+      backdrop-filter: blur(50px) saturate(1.8);
+      -webkit-backdrop-filter: blur(50px) saturate(1.8);
+      border: 1px solid rgba(255,255,255,0.48);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.7);
+      position: relative;
+    }
+    .gantt-container::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(165deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 20%, transparent 45%);
+      pointer-events: none; z-index: 1;
+    }
+    .gantt-container > * { position: relative; z-index: 2; }
+    @keyframes ganttSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .gantt-header {
+      display: grid; grid-template-columns: 210px 1fr;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+    }
+    .gantt-header-label {
+      padding: 14px 18px; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--purple);
+    }
+    .gantt-days { display: grid; grid-template-columns: repeat(5, 1fr); }
+    .gantt-day-header {
+      padding: 12px 8px; text-align: center;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--text-tertiary);
+      border-left: 1px solid rgba(255,255,255,0.2); transition: all 0.3s;
+    }
+    .gantt-day-header .day-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 500; color: var(--text-tertiary);
+      margin-top: 2px; opacity: 0.7;
+    }
+    .gantt-day-header.today {
+      background: linear-gradient(180deg, rgba(139,126,200,0.1), rgba(139,126,200,0.02));
+      color: var(--purple-dark); position: relative;
+    }
+    .gantt-day-header.today::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 18%; right: 18%; height: 2.5px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      border-radius: 2px; animation: todayShimmer 3s ease-in-out infinite;
+    }
+    @keyframes todayShimmer { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+    .gantt-day-header.today .day-date { color: var(--purple); opacity: 1; }
+
+    .gantt-section { border-top: 1px solid rgba(255,255,255,0.25); }
+    .gantt-section-header {
+      display: grid; grid-template-columns: 210px 1fr;
+      background: rgba(255,255,255,0.08);
+    }
+    .gantt-section-title {
+      padding: 10px 18px; display: flex; align-items: center; gap: 9px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .section-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+      animation: sectionDotPulse 3s ease-in-out infinite;
+    }
+    @keyframes sectionDotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.65; }
+    }
+    .section-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 600; padding: 2px 7px;
+      border-radius: 9px; background: rgba(139,126,200,0.08);
+      color: var(--purple); transition: all 0.3s;
+    }
+    .gantt-section-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      border-left: 1px solid rgba(255,255,255,0.15);
+    }
+    .gantt-section-grid > div {
+      border-left: 1px solid rgba(255,255,255,0.15); min-height: 30px;
+    }
+
+    .gantt-row {
+      display: grid; grid-template-columns: 210px 1fr;
+      min-height: 48px; border-top: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+      animation: rowFadeIn 0.35s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes rowFadeIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .gantt-row:hover { background: rgba(139,126,200,0.04); }
+
+    .gantt-row-label {
+      padding: 7px 14px; display: flex; align-items: center; gap: 9px;
+      font-size: 13px; font-weight: 500; color: var(--text-primary);
+      overflow: hidden; border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    .gantt-row-label .row-text {
+      flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      outline: none; min-width: 0; transition: all 0.2s;
+    }
+    .gantt-row-label .row-text:focus {
+      white-space: normal; overflow: visible;
+      background: rgba(255,255,255,0.6); border-radius: 5px; padding: 3px 5px;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .gantt-row-label .row-icon {
+      width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 800; color: white;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gantt-row:hover .row-icon { transform: scale(1.15) rotate(5deg); }
+    .row-icon.win { background: linear-gradient(135deg, var(--sage), var(--sage-dark)); }
+    .row-icon.task { background: linear-gradient(135deg, var(--purple), var(--purple-dark)); }
+    .row-icon.done { background: linear-gradient(135deg, var(--green-done), #4a9558); }
+    .row-icon.blocker { background: linear-gradient(135deg, var(--red), #a85a54); }
+    .row-icon.next { background: linear-gradient(135deg, var(--stone), #727268); }
+
+    .gantt-row-label .delete-btn {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--text-tertiary); flex-shrink: 0;
+      opacity: 0; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gantt-row:hover .delete-btn { opacity: 1; }
+    .delete-btn:hover { background: rgba(196,112,106,0.12); color: var(--red); transform: scale(1.2) rotate(90deg); }
+
+    .gantt-row-track {
+      position: relative;
+      display: grid; grid-template-columns: repeat(5, 1fr);
+    }
+    .gantt-row-track .day-cell {
+      border-left: 1px solid rgba(255,255,255,0.12); min-height: 48px;
+    }
+
+    .gantt-bar {
+      position: absolute; top: 7px; bottom: 7px;
+      border-radius: 8px; cursor: default;
+      display: flex; align-items: center; gap: 7px;
+      padding: 0 11px; overflow: hidden;
+      transition: box-shadow 0.2s, opacity 0.2s, transform 0.2s;
+      z-index: 5;
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    }
+    .gantt-bar:hover { transform: translateY(-1px); }
+    .gantt-bar.win {
+      background: linear-gradient(135deg, rgba(107,156,118,0.28), rgba(152,196,163,0.35));
+      border: 1px solid rgba(107,156,118,0.30);
+      box-shadow: 0 2px 12px rgba(107,156,118,0.1);
+    }
+    .gantt-bar.win::after {
+      content: ''; position: absolute;
+      top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: barShine 5s ease-in-out infinite;
+    }
+    @keyframes barShine { 0% { left: -100%; } 40% { left: 200%; } 100% { left: 200%; } }
+    .gantt-bar.task {
+      background: linear-gradient(135deg, rgba(139,126,200,0.22), rgba(176,166,220,0.30));
+      border: 1px solid rgba(139,126,200,0.26);
+      box-shadow: 0 2px 12px rgba(139,126,200,0.08);
+    }
+    .gantt-bar.done {
+      background: linear-gradient(135deg, rgba(90,171,106,0.18), rgba(90,171,106,0.26));
+      border: 1px solid rgba(90,171,106,0.22);
+      box-shadow: 0 2px 12px rgba(90,171,106,0.08);
+    }
+    .gantt-bar.done .bar-text { text-decoration: line-through; opacity: 0.55; }
+    .gantt-bar.blocker {
+      background: linear-gradient(135deg, rgba(196,112,106,0.20), rgba(196,112,106,0.30));
+      border: 1px solid rgba(196,112,106,0.26);
+      box-shadow: 0 2px 12px rgba(196,112,106,0.08);
+      animation: blockerWiggle 6s ease-in-out infinite;
+    }
+    @keyframes blockerWiggle {
+      0%, 86%, 100% { transform: translateX(0); }
+      88% { transform: translateX(-2px); } 90% { transform: translateX(2px); }
+      92% { transform: translateX(-2px); } 94% { transform: translateX(2px); }
+      96% { transform: translateX(0); }
+    }
+    .gantt-bar.next {
+      background: linear-gradient(135deg, rgba(138,138,128,0.18), rgba(138,138,128,0.26));
+      border: 1px solid rgba(138,138,128,0.22); border-style: dashed;
+      box-shadow: 0 2px 12px rgba(138,138,128,0.06);
+    }
+    .gantt-bar.admin-bar-item { cursor: grab; }
+    .gantt-bar.admin-bar-item:active { cursor: grabbing; }
+
+    .bar-text {
+      font-size: 12px; font-weight: 500; color: var(--text-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      flex: 1; min-width: 0;
+    }
+    .bar-owners { display: flex; gap: 3px; flex-shrink: 0; }
+    .bar-owner-dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      font-size: 7px; font-weight: 700; color: white;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: transform 0.2s;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    }
+    .bar-owner-dot:hover { transform: scale(1.3); }
+
+    .gantt-bar .resize-handle {
+      position: absolute; top: 0; bottom: 0; width: 8px;
+      cursor: col-resize; z-index: 10;
+    }
+    .resize-handle.left { left: -2px; }
+    .resize-handle.right { right: -2px; }
+
+    .owner-row {
+      display: flex; align-items: center; gap: 5px; margin-top: 4px;
+      padding: 0 14px 7px;
+    }
+    .owner-picker-btn {
+      width: 24px; height: 24px; border-radius: 50%;
+      font-size: 8px; font-weight: 700; color: rgba(0,0,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s cubic-bezier(0.16,1,0.3,1); border: 1.5px solid transparent;
+    }
+    .owner-picker-btn.selected { color: white; border-color: rgba(255,255,255,0.3); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .owner-picker-btn:hover { transform: scale(1.25) rotate(10deg); }
+
+    .task-toggle-row { display: flex; gap: 4px; flex-shrink: 0; }
+    .toggle-btn {
+      font-size: 10px; font-weight: 600; padding: 3px 10px;
+      border-radius: 9px; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .toggle-btn:hover { transform: scale(1.06); }
+    .toggle-btn.check-btn {
+      background: rgba(90,171,106,0.12); color: var(--green-done);
+      border: 1px solid rgba(90,171,106,0.20);
+    }
+    .toggle-btn.check-btn:hover { background: rgba(90,171,106,0.20); }
+    .toggle-btn.check-btn.active { background: var(--green-done); color: white; }
+    .toggle-btn.block-btn {
+      background: rgba(196,112,106,0.10); color: var(--red);
+      border: 1px solid rgba(196,112,106,0.16);
+    }
+    .toggle-btn.block-btn:hover { background: rgba(196,112,106,0.18); }
+    .toggle-btn.block-btn.active { background: var(--red); color: white; }
+    .toggle-btn.undo-btn {
+      background: rgba(139,126,200,0.10); color: var(--purple);
+      border: 1px solid rgba(139,126,200,0.18);
+    }
+    .toggle-btn.undo-btn:hover { background: rgba(139,126,200,0.18); }
+
+    .add-row-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 7px 16px; margin: 5px 0 5px 14px;
+      font-size: 12px; font-weight: 600; color: var(--text-tertiary);
+      border-radius: 9px; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .add-row-btn:hover { background: rgba(139,126,200,0.07); color: var(--purple); transform: translateX(4px); }
+
+    .empty-row {
+      grid-column: 1 / -1; padding: 14px 18px;
+      font-size: 12px; color: var(--text-tertiary); font-style: italic;
+    }
+
+    .pin-modal {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(42,42,38,0.2);
+      backdrop-filter: blur(20px) saturate(1.5);
+      -webkit-backdrop-filter: blur(20px) saturate(1.5);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: all 0.3s;
+    }
+    .pin-modal.show { opacity: 1; visibility: visible; }
+    .pin-box {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(70px) saturate(2.0);
+      -webkit-backdrop-filter: blur(70px) saturate(2.0);
+      border: 1px solid rgba(255,255,255,0.65);
+      border-radius: 28px;
+      box-shadow: 0 36px 110px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
+      padding: 36px; width: 360px; text-align: center;
+      animation: modalPop 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.88) translateY(22px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .pin-title {
+      font-size: 18px; font-weight: 700; margin-bottom: 5px;
+      background: linear-gradient(135deg, var(--sage-dark), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .pin-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 22px; }
+    .pin-row { display: flex; gap: 9px; justify-content: center; margin-bottom: 22px; }
+    .pin-digit {
+      width: 42px; height: 52px; border-radius: 13px; text-align: center;
+      font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      outline: none; transition: all 0.2s;
+    }
+    .pin-digit:focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-glow); transform: scale(1.05); }
+    .pin-digit.error { border-color: var(--red); background: var(--red-bg); animation: pinShake 0.4s ease; }
+    @keyframes pinShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); } 40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); } 80% { transform: translateX(4px); }
+    }
+    .pin-actions { display: flex; gap: 9px; justify-content: center; }
+    .pin-btn {
+      height: 42px; padding: 0 24px; border-radius: 14px;
+      font-size: 14px; font-weight: 600; transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .pin-btn:hover { transform: translateY(-1px); }
+    .pin-btn.primary {
+      background: linear-gradient(135deg, var(--purple), var(--sage-dark));
+      color: white; box-shadow: 0 4px 18px var(--purple-glow);
+    }
+    .pin-btn.primary:hover { box-shadow: 0 6px 28px var(--purple-glow); }
+    .pin-btn.secondary {
+      background: rgba(255,255,255,0.35); color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,0.4);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .pin-btn.secondary:hover { background: rgba(255,255,255,0.5); }
+
+    #patInput {
+      width: 100%; padding: 11px 14px; font-size: 14px; font-weight: 500;
+      border: 1.5px solid rgba(255,255,255,0.45); border-radius: 13px;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      outline: none; transition: all 0.2s; margin-bottom: 18px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    #patInput:focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-glow); }
+
+    .next-week-divider {
+      margin-top: 28px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 18px; padding: 0 4px;
+      animation: fadeIn 0.5s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+    }
+    .next-week-divider-line {
+      flex: 1; height: 1.5px;
+      background: linear-gradient(90deg, transparent, rgba(139,126,200,0.2), transparent);
+    }
+    .next-week-divider-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--purple); white-space: nowrap;
+      padding: 5px 16px;
+      background: rgba(255,255,255,0.4);
+      backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255,255,255,0.45); border-radius: 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+      animation: labelFloat 4s ease-in-out infinite;
+    }
+    @keyframes labelFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+    .next-week-container {
+      border-radius: var(--radius); overflow: hidden;
+      border: 1.5px dashed rgba(139,126,200,0.20);
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(50px) saturate(1.8);
+      -webkit-backdrop-filter: blur(50px) saturate(1.8);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.5);
+      position: relative;
+      animation: ganttSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.5s both;
+    }
+    .next-week-container::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      background: linear-gradient(165deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.08) 25%, transparent 50%);
+      pointer-events: none; z-index: 1;
+    }
+    .next-week-container > * { position: relative; z-index: 2; }
+
+    .confetti-particle { position: fixed; pointer-events: none; z-index: 9999; border-radius: 2px; }
+    .confetti-fall { animation: confettiFall 1.6s ease-out forwards; }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translateY(220px) rotate(800deg) scale(0); opacity: 0; }
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16,1,0.3,1) both; }
+
+    @media print {
+      @page { size: A4 portrait; margin: 14mm 12mm; }
+      .header, .main-wrap, .admin-toggle, .pdf-btn, .save-indicator, .pin-modal, .floating-orb, .bg-layer { display: none !important; }
+      body { background: white; color: #111; }
+      #report { display: block !important; }
+    }
+    /* Client report (hidden on screen, shown on print) */
+    #report { display: none; font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #2a2a26; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    #report .rpt-cover { display: flex; align-items: center; gap: 16px; padding: 0 0 14px; border-bottom: 2px solid #6b9c76; margin-bottom: 18px; }
+    #report .rpt-logos { display: flex; align-items: center; gap: 10px; }
+    #report .rpt-logos img { height: 44px; width: auto; object-fit: contain; }
+    #report .rpt-logo-sep { width: 1px; height: 32px; background: #d0d0c8; }
+    #report .rpt-cover-text { flex: 1; }
+    #report .rpt-title { font-size: 22px; font-weight: 700; margin: 0; color: #2a2a26; letter-spacing: -0.3px; }
+    #report .rpt-sub { font-size: 11px; color: #6b9c76; margin-top: 3px; font-weight: 600; }
+    #report .rpt-meta { font-size: 10px; color: #888; margin-top: 4px; }
+    #report .rpt-week { break-inside: avoid; page-break-inside: avoid; border: 1px solid #e5e5df; border-left: 3px solid #6b9c76; border-radius: 6px; padding: 10px 12px; margin-bottom: 10px; background: #fafaf8; }
+    #report .rpt-week.yellow { border-left-color: #c4a24e; }
+    #report .rpt-week.red { border-left-color: #c4706a; }
+    #report .rpt-week-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; border-bottom: 1px solid #ececea; padding-bottom: 6px; margin-bottom: 7px; }
+    #report .rpt-week-title { font-size: 13px; font-weight: 700; color: #2a2a26; }
+    #report .rpt-week-dates { font-size: 10px; color: #888; font-weight: 500; }
+    #report .rpt-status { display: inline-block; font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.4px; color: #fff; }
+    #report .rpt-status.green { background: #6b9c76; }
+    #report .rpt-status.yellow { background: #c4a24e; }
+    #report .rpt-status.red { background: #c4706a; }
+    #report .rpt-summary { font-size: 10.5px; color: #444; margin-bottom: 6px; font-style: italic; }
+    #report .rpt-metrics { display: flex; gap: 14px; font-size: 9.5px; color: #777; margin-bottom: 8px; }
+    #report .rpt-metrics span b { color: #2a2a26; font-weight: 700; }
+    #report .rpt-metrics .m-completed b { color: #5aab6a; }
+    #report .rpt-metrics .m-blocked b { color: #c4706a; }
+    #report .rpt-metrics .m-progress b { color: #8b7ec8; }
+    #report .rpt-metrics .m-wins b { color: #6b9c76; }
+    #report .rpt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
+    #report .rpt-section { font-size: 10px; }
+    #report .rpt-section h4 { font-size: 9px; text-transform: uppercase; letter-spacing: 0.6px; margin: 4px 0 3px; font-weight: 700; }
+    #report .rpt-section.s-wins h4 { color: #6b9c76; }
+    #report .rpt-section.s-tasks h4 { color: #8b7ec8; }
+    #report .rpt-section.s-blockers h4 { color: #c4706a; }
+    #report .rpt-section.s-next h4 { color: #8a8a80; }
+    #report .rpt-section ul { margin: 0; padding-left: 14px; }
+    #report .rpt-section li { margin-bottom: 2px; line-height: 1.35; color: #2a2a26; }
+    #report .rpt-section li.done { color: #5aab6a; }
+    #report .rpt-empty { color: #bbb; font-style: italic; padding-left: 0; list-style: none; }
+
+    @media (max-width: 900px) {
+      .header-inner { padding: 0 18px; grid-template-columns: auto 1fr auto; }
+      .main-wrap { padding: 0 18px 44px; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      .gantt-row-label { min-width: 150px; }
+      .gantt-header { grid-template-columns: 150px 1fr; }
+      .gantt-row { grid-template-columns: 150px 1fr; }
+      .gantt-section-header { grid-template-columns: 150px 1fr; }
+      .dial-center { min-width: 160px; padding: 2px 12px; }
+      .dial-label { font-size: 11px; }
+      .header-title { display: none; }
+    }
+    @media (max-width: 600px) {
+      .metrics-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="floating-orb orb-1"></div>
+  <div class="floating-orb orb-2"></div>
+  <div class="floating-orb orb-3"></div>
+  <div class="floating-orb orb-4"></div>
+  <div class="save-indicator" id="saveIndicator">Saved</div>
+
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="brand-marks">
+            <div class="brand-mark" id="logoPlaceholder1">
+            <img src="data:image/png;base64,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" />
+            </div>
+            <div class="brand-separator"></div>
+            <div class="brand-mark" id="logoPlaceholder2">
+            <img src="data:image/png;base64,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" />
+            </div>
+        </div>
+        <div class="header-title">Weekly Tracker</div>
+      </div>
+      <div class="header-center" id="headerCenter">
+        <div class="week-dial">
+          <button class="dial-arrow" id="prevWeek">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="dial-center" id="dialCenter">
+            <div class="dial-label" id="weekLabel"></div>
+            <div class="dial-sublabel" id="weekSublabel"></div>
+          </div>
+          <button class="dial-arrow" id="nextWeek">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <div class="week-dropdown" id="weekDropdown"></div>
+      </div>
+      <div class="header-right">
+        <button class="header-btn pdf-btn" id="downloadPdf">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          PDF
+        </button>
+        <button class="header-btn admin-toggle" id="adminToggle">Admin</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <div id="mainContent"></div>
+  </div>
+
+  <div class="pin-modal" id="pinModal">
+    <div class="pin-box">
+      <div class="pin-title" id="pinModalTitle">Admin Access</div>
+      <div class="pin-sub" id="pinModalSub">Enter 6-digit PIN to edit</div>
+      <div id="pinStep1">
+        <div class="pin-row" id="pinRow">
+          <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" autocomplete="off">
+          <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" autocomplete="off">
+          <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" autocomplete="off">
+          <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" autocomplete="off">
+          <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" autocomplete="off">
+          <input class="pin-digit" type="password" maxlength="1" inputmode="numeric" autocomplete="off">
+        </div>
+      </div>
+      <div id="pinStep2" style="display:none;">
+        <input type="password" id="patInput" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
+      </div>
+      <div class="pin-actions">
+        <button class="pin-btn secondary" id="pinCancel">Cancel</button>
+        <button class="pin-btn primary" id="pinSubmit">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const GIST_ID = '39ae4f6db2a7b659cda64a01f2c00a56';
+  const GIST_FILE = 'data.json';
+  const ADMIN_PIN = '400570';
+
+  function getGistToken() { return sessionStorage.getItem('gist_pat') || ''; }
+  function setGistToken(t) { sessionStorage.setItem('gist_pat', t); }
+
+  const PIN_LENGTH = 6;
+  const STORAGE_KEY = 'wtGantt1';
+
+  const MEMBERS = [
+    { id:'akash',    name:'Akash',    initial:'AK', color:'#E87A45', skills:[] },
+    { id:'trisha',   name:'Trisha',   initial:'TR', color:'#5B8DEF', skills:[] },
+    { id:'anirudh',  name:'Anirudh',  initial:'AN', color:'#9b6ec4', skills:[] },
+    { id:'sushant',  name:'Sushant',  initial:'SU', color:'#44C4A1', skills:[] }
+  ];
+  const MM = {};
+  MEMBERS.forEach(m => MM[m.id] = m);
+
+  let weekOff = 0, admin = false, allData = {}, gistOk = !!GIST_ID, saveT = null, dirtyKeys = new Set();
+  let dropdownOpen = false;
+
+  const WEEKS_FORWARD_ADMIN = 4;
+  const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
+  function ws(o) {
+    const d = new Date(); d.setHours(0,0,0,0);
+    const day = d.getDay();
+    d.setDate(d.getDate() - day + (day === 0 ? -6 : 1) + o * 7);
+    return d;
+  }
+  function we(o) { const d = ws(o); d.setDate(d.getDate() + 4); return d; }
+  function wk(o) {
+    const d = ws(o);
+    const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  function wl(o) {
+    const s = ws(o), e = we(o);
+    const op = { month:'short', day:'numeric' };
+    const a = s.toLocaleDateString('en-US', op), b = e.toLocaleDateString('en-US', op);
+    if (s.getFullYear() !== e.getFullYear()) return `${a}, ${s.getFullYear()} -- ${b}, ${e.getFullYear()}`;
+    return `${a} -- ${b}, ${e.getFullYear()}`;
+  }
+  function wlShort(o) {
+    const s = ws(o), e = we(o), op = { month:'short', day:'numeric' };
+    return s.toLocaleDateString('en-US', op) + ' -- ' + e.toLocaleDateString('en-US', op);
+  }
+  function offsetFromKey(k) {
+    const d = new Date(k + 'T00:00:00');
+    const cur = ws(0);
+    return Math.round((d - cur) / (7 * 86400000));
+  }
+  function getMaxWeek() { return admin ? WEEKS_FORWARD_ADMIN : 0; }
+  function kickoffOffset() {
+    const k = new Date(2026, 1, 23);
+    const cur = ws(0);
+    return Math.round((k - cur) / (7 * 86400000));
+  }
+  function getMinWeek() {
+    const floor = kickoffOffset();
+    let min = 0;
+    for (const k of Object.keys(allData)) {
+      const o = offsetFromKey(k);
+      if (o < min) min = o;
+    }
+    return Math.max(min, floor);
+  }
+  function migrateSundayKeys() {
+    // Old bug: wk() used toISOString() which shifted local Mondays back to Sunday in UTC.
+    // Move any Sunday-keyed week forward by 1 day so it aligns with the local Monday.
+    let changed = false;
+    for (const k of Object.keys(allData)) {
+      const d = new Date(k + 'T00:00:00');
+      if (d.getDay() === 0) {
+        d.setDate(d.getDate() + 1);
+        const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'), day = String(d.getDate()).padStart(2, '0');
+        const nk = `${y}-${m}-${day}`;
+        if (!allData[nk]) allData[nk] = allData[k];
+        delete allData[k];
+        changed = true;
+      }
+    }
+    return changed;
+  }
+  function purgePreKickoff() {
+    const floor = kickoffOffset();
+    let changed = false;
+    for (const k of Object.keys(allData)) {
+      if (offsetFromKey(k) < floor) { delete allData[k]; changed = true; }
+    }
+    return changed;
+  }
+  function getWeekNum(o) {
+    const s = ws(o), start = new Date(s.getFullYear(), 0, 1);
+    return Math.ceil(((s - start) / 86400000 + start.getDay() + 1) / 7);
+  }
+  function getDayDates(o) {
+    const s = ws(o), dates = [];
+    for (let i = 0; i < 5; i++) { const d = new Date(s); d.setDate(d.getDate() + i); dates.push(d); }
+    return dates;
+  }
+  function isToday(d) { const t = new Date(); t.setHours(0,0,0,0); return d.getTime() === t.getTime(); }
+
+  function lc() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
+  function sc() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(allData)); } catch {} }
+  async function lg() {
+    if (!gistOk) return null;
+    try {
+      const r = await fetch('https://api.github.com/gists/' + GIST_ID, { headers: { 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const g = await r.json(), f = g.files[GIST_FILE];
+      if (!f) throw new Error('no file');
+      return JSON.parse(f.content);
+    } catch (e) { console.error('[GIST] Load FAILED:', e.message); return null; }
+  }
+  async function sg() {
+    if (!gistOk) return;
+    try {
+      const tok = getGistToken(); if (!tok) return;
+      const r = await fetch('https://api.github.com/gists/' + GIST_ID, {
+        method: 'PATCH',
+        headers: { 'Authorization': 'token ' + tok, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ files: { [GIST_FILE]: { content: JSON.stringify(allData, null, 2) } } })
+      });
+      if (!r.ok) console.error('[GIST] Save FAILED:', r.status);
+    } catch (e) { console.error('[GIST] Save FAILED:', e.message); }
+  }
+  function save() {
+    const k = wk(weekOff);
+    if (allData[k]) { allData[k]._ts = Date.now(); dirtyKeys.add(k); }
+    sc(); si(); clearTimeout(saveT); saveT = setTimeout(() => sg(), 1500);
+  }
+  function gw(k) {
+    if (!allData[k]) allData[k] = { status:'green', summary:'', wins:[], tasks:[], blockers:[], nextWeek:[] };
+    const w = allData[k];
+    ['wins','tasks','blockers','nextWeek'].forEach(arr => w[arr].forEach(item => { if (item.startDay === undefined) { item.startDay = 0; item.endDay = 4; } }));
+    return w;
+  }
+  function si() {
+    const el = document.getElementById('saveIndicator');
+    el.classList.add('show'); clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), 1200);
+  }
+  function cm(w) {
+    return {
+      wins: w.wins.length,
+      completed: w.tasks.filter(t => t.done).length,
+      inProgress: w.tasks.filter(t => !t.done && !t.blocked).length,
+      blocked: w.tasks.filter(t => t.blocked).length + w.blockers.length
+    };
+  }
+  function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function spawnConfetti(x, y) {
+    const colors = ['#E87A45', '#5B8DEF', '#9b6ec4', '#44C4A1', '#c4a24e', '#6b9c76', '#8b7ec8'];
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-particle confetti-fall';
+      p.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+      p.style.top = (y + (Math.random() - 0.5) * 24) + 'px';
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.width = (5 + Math.random() * 7) + 'px';
+      p.style.height = (5 + Math.random() * 7) + 'px';
+      p.style.animationDuration = (1.1 + Math.random() * 0.9) + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 2200);
+    }
+  }
+
+  function toggleDropdown(force) {
+    dropdownOpen = force !== undefined ? force : !dropdownOpen;
+    document.getElementById('weekDropdown').classList.toggle('open', dropdownOpen);
+    if (dropdownOpen) renderDropdown();
+  }
+  function renderDropdown() {
+    const minW = getMinWeek(), maxW = getMaxWeek();
+    let h = '', lastMonth = '';
+    for (let o = maxW; o >= minW; o--) {
+      const s = ws(o);
+      const mo = s.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      if (mo !== lastMonth) { h += `<div class="wd-month-label">${mo}</div>`; lastMonth = mo; }
+      const sel = o === weekOff ? ' selected' : '';
+      const cur = o === 0 ? ' current' : '';
+      const key = wk(o);
+      const hasData = allData[key] && (allData[key].wins?.length || allData[key].tasks?.length || allData[key].blockers?.length);
+      h += `<div class="wd-week-item${sel}${cur}" data-offset="${o}">${wlShort(o)}${hasData ? ' *' : ''}</div>`;
+    }
+    document.getElementById('weekDropdown').innerHTML = h;
+  }
+  document.getElementById('dialCenter').addEventListener('click', () => toggleDropdown());
+  document.getElementById('weekDropdown').addEventListener('click', e => {
+    const item = e.target.closest('.wd-week-item'); if (!item) return;
+    weekOff = parseInt(item.dataset.offset); toggleDropdown(false); render();
+  });
+  document.addEventListener('click', e => { if (dropdownOpen && !e.target.closest('.header-center')) toggleDropdown(false); });
+
+  function ownerBadges(owners) {
+    let h = '';
+    (owners || []).forEach(id => { const m = MM[id]; if (m) h += `<span class="bar-owner-dot" style="background:${m.color};" title="${m.name}">${m.initial}</span>`; });
+    return h;
+  }
+  function ownerPicker(type, idx, selected) {
+    let h = '<div class="owner-row">';
+    MEMBERS.forEach(m => {
+      const sel = (selected || []).includes(m.id);
+      h += `<button class="owner-picker-btn ${sel ? 'selected' : ''}" style="background:${sel ? m.color : 'rgba(0,0,0,0.04)'};" data-action="toggleOwner" data-type="${type}" data-index="${idx}" data-member="${m.id}" title="${m.name}">${m.initial}</button>`;
+    });
+    return h + '</div>';
+  }
+  function barStyle(startDay, endDay) {
+    return `left:${startDay / 5 * 100}%;width:${(endDay - startDay + 1) / 5 * 100}%;`;
+  }
+
+  function render() {
+    const key = wk(weekOff), w = gw(key), m = cm(w), ed = admin;
+    document.getElementById('weekLabel').innerHTML = wl(weekOff) + (weekOff === 0 ? '<span class="this-week-badge">THIS WEEK</span>' : '');
+    const wn = getWeekNum(weekOff);
+    let sub = 'Week ' + wn;
+    if (weekOff === 0) sub += ' -- Current';
+    else if (weekOff === 1) sub += ' -- Next week';
+    else if (weekOff > 1) sub += ' -- +' + weekOff + ' weeks';
+    document.getElementById('weekSublabel').textContent = sub;
+
+    const ab = document.getElementById('adminToggle');
+    ab.textContent = ed ? 'Lock' : 'Admin';
+    ab.className = 'header-btn admin-toggle' + (ed ? ' unlocked' : '');
+    document.getElementById('nextWeek').disabled = weekOff >= getMaxWeek();
+    document.getElementById('prevWeek').disabled = weekOff <= getMinWeek();
+
+    let sc_ = w.status || 'green';
+    if (sc_ === 'amber') sc_ = 'red';
+    const sl = { green: 'On Track', red: 'Delayed' };
+
+    let h = '';
+
+    h += `<div class="status-strip glass fade-in"><div class="status-dot ${sc_}"></div><span class="status-tag ${sc_}">${sl[sc_]}</span>`;
+    if (ed) h += `<select class="status-select" data-action="changeStatus"><option value="green"${sc_ === 'green' ? ' selected' : ''}>On Track</option><option value="red"${sc_ === 'red' ? ' selected' : ''}>Delayed</option></select>`;
+    const sumT = w.summary || (ed ? '' : 'No summary for this week.');
+    h += `<div class="status-summary" ${ed ? 'contenteditable="true" data-action="editSummary"' : ''}>${esc(sumT)}</div></div>`;
+
+    h += '<div class="metrics-row">';
+    h += `<div class="metric-pill"><div class="metric-num wins">${m.wins}</div><div class="metric-info"><div class="metric-label">Wins</div></div></div>`;
+    h += `<div class="metric-pill"><div class="metric-num completed">${m.completed}</div><div class="metric-info"><div class="metric-label">Completed</div></div></div>`;
+    h += `<div class="metric-pill"><div class="metric-num in-progress">${m.inProgress}</div><div class="metric-info"><div class="metric-label">In Progress</div></div></div>`;
+    h += `<div class="metric-pill"><div class="metric-num blocked">${m.blocked}</div><div class="metric-info"><div class="metric-label">Blocked</div></div></div>`;
+    h += '</div>';
+
+    if (ed) {
+      h += '<div class="admin-bar fade-in"><div class="admin-bar-dot"></div>Admin Mode -- Drag bars to adjust day spans. Click items to edit.</div>';
+    }
+
+    const dayDates = getDayDates(weekOff);
+    h += '<div class="gantt-container">';
+    h += '<div class="gantt-header">';
+    h += '<div class="gantt-header-label">Item</div>';
+    h += '<div class="gantt-days">';
+    dayDates.forEach((d, i) => {
+      const todayCls = isToday(d) ? ' today' : '';
+      h += `<div class="gantt-day-header${todayCls}"><div>${DAYS[i]}</div><div class="day-date">${d.getDate()}</div></div>`;
+    });
+    h += '</div></div>';
+
+    h += buildSection('Wins', 'win', w.wins, ed, 'addWin', 'deleteWin', 'editWin');
+    const activeTasks = w.tasks.filter(t => !t.done && !t.blocked);
+    const activeIndices = w.tasks.map((t, i) => (!t.done && !t.blocked) ? i : -1).filter(i => i >= 0);
+    h += buildTaskSection('In Progress', 'task', activeTasks, activeIndices, w, ed);
+    const doneTasks = w.tasks.filter(t => t.done);
+    const doneIndices = w.tasks.map((t, i) => t.done ? i : -1).filter(i => i >= 0);
+    h += buildTaskSection('Completed', 'done', doneTasks, doneIndices, w, ed);
+    const blockedTasks = w.tasks.filter(t => t.blocked);
+    const blockedIndices = w.tasks.map((t, i) => t.blocked ? i : -1).filter(i => i >= 0);
+    h += buildBlockerSection(blockedTasks, blockedIndices, w.blockers, ed);
+    h += '</div>';
+
+    h += '<div class="next-week-divider"><div class="next-week-divider-line"></div><div class="next-week-divider-label">Looking Ahead -- Next Week</div><div class="next-week-divider-line"></div></div>';
+    h += '<div class="next-week-container">';
+    h += buildNextWeekContent(w.nextWeek, ed);
+    h += '</div>';
+
+    document.getElementById('mainContent').innerHTML = h;
+    if (ed) initDrag();
+  }
+
+  function buildSection(title, type, items, ed, addAction, delAction, editAction) {
+    const dotColor = { win:'var(--sage)', task:'var(--purple)', done:'var(--green-done)', blocker:'var(--red)', next:'var(--stone)' }[type];
+    let h = '<div class="gantt-section"><div class="gantt-section-header">';
+    h += `<div class="gantt-section-title"><span class="section-dot" style="background:${dotColor};"></span>${title}<span class="section-count">${items.length}</span></div>`;
+    h += '<div class="gantt-section-grid">'; for (let i=0;i<5;i++) h+='<div></div>'; h += '</div></div>';
+    if (!items.length) { h += `<div class="empty-row">${ed ? 'No items yet.' : 'Nothing to show.'}</div>`; }
+    else items.forEach((item, i) => {
+      h += '<div class="gantt-row"><div class="gantt-row-label">';
+      h += `<div class="row-icon ${type}">${type==='win'?'W':''}</div>`;
+      h += `<div class="row-text" ${ed ? `contenteditable="true" data-action="${editAction}" data-index="${i}"` : ''}>${esc(item.text)}</div>`;
+      if (ed) h += `<button class="delete-btn" data-action="${delAction}" data-index="${i}">x</button>`;
+      h += '</div><div class="gantt-row-track">'; for (let d=0;d<5;d++) h+='<div class="day-cell"></div>';
+      h += `<div class="gantt-bar ${type} ${ed?'admin-bar-item':''}" style="${barStyle(item.startDay||0, item.endDay!==undefined?item.endDay:4)}" data-type="${type}" data-index="${i}">`;
+      if (ed) h += '<div class="resize-handle left" data-handle="left"></div>';
+      h += `<span class="bar-text">${esc(item.text)}</span><span class="bar-owners">${ownerBadges(item.owners)}</span>`;
+      if (ed) h += '<div class="resize-handle right" data-handle="right"></div>';
+      h += '</div></div>';
+      if (ed) h += ownerPicker(type==='win'?'win':type, i, item.owners||[]);
+      h += '</div>';
+    });
+    if (ed) h += `<button class="add-row-btn" data-action="${addAction}">+ Add ${title.toLowerCase()}</button>`;
+    return h + '</div>';
+  }
+
+  function buildNextWeekContent(items, ed) {
+    let h = '<div class="gantt-section" style="border-top:none;"><div class="gantt-section-header">';
+    h += `<div class="gantt-section-title"><span class="section-dot" style="background:var(--stone);"></span>Planned Items<span class="section-count">${items.length}</span></div>`;
+    h += '<div class="gantt-section-grid">'; for (let i=0;i<5;i++) h+='<div></div>'; h += '</div></div>';
+    if (!items.length) { h += `<div class="empty-row">${ed ? 'No items planned yet.' : 'Nothing planned yet.'}</div>`; }
+    else items.forEach((item, i) => {
+      h += '<div class="gantt-row"><div class="gantt-row-label">';
+      h += '<div class="row-icon next">N</div>';
+      h += `<div class="row-text" ${ed ? `contenteditable="true" data-action="editNextWeek" data-index="${i}"` : ''}>${esc(item.text)}</div>`;
+      if (ed) h += `<button class="delete-btn" data-action="deleteNextWeek" data-index="${i}">x</button>`;
+      h += '</div><div class="gantt-row-track">'; for (let d=0;d<5;d++) h+='<div class="day-cell"></div>';
+      h += `<div class="gantt-bar next ${ed?'admin-bar-item':''}" style="${barStyle(item.startDay||0, item.endDay!==undefined?item.endDay:4)}" data-type="next" data-index="${i}">`;
+      if (ed) h += '<div class="resize-handle left" data-handle="left"></div>';
+      h += `<span class="bar-text">${esc(item.text)}</span><span class="bar-owners">${ownerBadges(item.owners)}</span>`;
+      if (ed) h += '<div class="resize-handle right" data-handle="right"></div>';
+      h += '</div></div>';
+      if (ed) h += ownerPicker('nextWeek', i, item.owners||[]);
+      h += '</div>';
+    });
+    if (ed) h += '<button class="add-row-btn" data-action="addNextWeek">+ Add item</button>';
+    return h + '</div>';
+  }
+
+  function buildTaskSection(title, type, tasks, realIndices, w, ed) {
+    const dotColor = type === 'done' ? 'var(--green-done)' : 'var(--purple)';
+    let h = '<div class="gantt-section"><div class="gantt-section-header">';
+    h += `<div class="gantt-section-title"><span class="section-dot" style="background:${dotColor};"></span>${title}<span class="section-count">${tasks.length}</span></div>`;
+    h += '<div class="gantt-section-grid">'; for (let i=0;i<5;i++) h+='<div></div>'; h += '</div></div>';
+    if (!tasks.length) { h += `<div class="empty-row">No ${title.toLowerCase()} tasks.</div>`; }
+    else tasks.forEach((task, i) => {
+      const ri = realIndices[i];
+      h += '<div class="gantt-row"><div class="gantt-row-label">';
+      h += `<div class="row-icon ${type}">${type==='done'?'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>`;
+      h += `<div class="row-text" ${ed ? `contenteditable="true" data-action="editTask" data-index="${ri}"` : ''}>${esc(task.text)}</div>`;
+      if (ed) {
+        h += '<div class="task-toggle-row">';
+        if (type === 'task') {
+          h += `<button class="toggle-btn check-btn" data-action="toggleTask" data-index="${ri}" title="Mark done">Do</button>`;
+          h += `<button class="toggle-btn block-btn ${task.blocked?'active':''}" data-action="toggleBlocked" data-index="${ri}" title="Toggle blocked">${task.blocked?'Unblk':'Blk'}</button>`;
+        } else if (type === 'done') {
+          h += `<button class="toggle-btn undo-btn" data-action="toggleTask" data-index="${ri}" title="Undo completion">Undo</button>`;
+        }
+        h += '</div>';
+        h += `<button class="delete-btn" data-action="deleteTask" data-index="${ri}">x</button>`;
+      }
+      h += '</div><div class="gantt-row-track">'; for (let d=0;d<5;d++) h+='<div class="day-cell"></div>';
+      h += `<div class="gantt-bar ${type} ${ed?'admin-bar-item':''}" style="${barStyle(task.startDay||0, task.endDay!==undefined?task.endDay:4)}" data-type="task" data-index="${ri}">`;
+      if (ed) h += '<div class="resize-handle left" data-handle="left"></div>';
+      h += `<span class="bar-text">${esc(task.text)}</span><span class="bar-owners">${ownerBadges(task.owners)}</span>`;
+      if (ed) h += '<div class="resize-handle right" data-handle="right"></div>';
+      h += '</div></div>';
+      if (ed) h += ownerPicker('task', ri, task.owners||[]);
+      h += '</div>';
+    });
+    if (ed && type === 'task') h += '<button class="add-row-btn" data-action="addTask">+ Add task</button>';
+    return h + '</div>';
+  }
+
+  function buildBlockerSection(blockedTasks, blockedIndices, blockers, ed) {
+    const total = blockedTasks.length + blockers.length;
+    let h = '<div class="gantt-section"><div class="gantt-section-header">';
+    h += `<div class="gantt-section-title"><span class="section-dot" style="background:var(--red);"></span>Blockers<span class="section-count">${total}</span></div>`;
+    h += '<div class="gantt-section-grid">'; for (let i=0;i<5;i++) h+='<div></div>'; h += '</div></div>';
+    if (!total) h += '<div class="empty-row">No blockers -- smooth sailing.</div>';
+    blockedTasks.forEach((task, i) => {
+      const ri = blockedIndices[i];
+      h += '<div class="gantt-row"><div class="gantt-row-label">';
+      h += '<div class="row-icon blocker">!</div>';
+      h += `<div class="row-text" ${ed ? `contenteditable="true" data-action="editTask" data-index="${ri}"` : ''}>${esc(task.text)}</div>`;
+      if (ed) {
+        h += '<div class="task-toggle-row">';
+        h += `<button class="toggle-btn block-btn active" data-action="toggleBlocked" data-index="${ri}" title="Unblock">Unblk</button>`;
+        h += '</div>';
+        h += `<button class="delete-btn" data-action="deleteTask" data-index="${ri}">x</button>`;
+      }
+      h += '</div><div class="gantt-row-track">'; for (let d=0;d<5;d++) h+='<div class="day-cell"></div>';
+      h += `<div class="gantt-bar blocker ${ed?'admin-bar-item':''}" style="${barStyle(task.startDay||0, task.endDay!==undefined?task.endDay:4)}" data-type="task" data-index="${ri}">`;
+      if (ed) h += '<div class="resize-handle left" data-handle="left"></div>';
+      h += `<span class="bar-text">${esc(task.text)}</span><span class="bar-owners">${ownerBadges(task.owners)}</span>`;
+      if (ed) h += '<div class="resize-handle right" data-handle="right"></div>';
+      h += '</div></div>';
+      if (ed) h += ownerPicker('task', ri, task.owners||[]);
+      h += '</div>';
+    });
+    blockers.forEach((b, i) => {
+      h += '<div class="gantt-row"><div class="gantt-row-label">';
+      h += '<div class="row-icon blocker">!</div>';
+      h += `<div class="row-text" ${ed ? `contenteditable="true" data-action="editBlocker" data-index="${i}"` : ''}>${esc(b.text)}</div>`;
+      if (ed) h += `<button class="delete-btn" data-action="deleteBlocker" data-index="${i}">x</button>`;
+      h += '</div><div class="gantt-row-track">'; for (let d=0;d<5;d++) h+='<div class="day-cell"></div>';
+      h += `<div class="gantt-bar blocker ${ed?'admin-bar-item':''}" style="${barStyle(b.startDay||0, b.endDay!==undefined?b.endDay:4)}" data-type="blocker" data-index="${i}">`;
+      if (ed) h += '<div class="resize-handle left" data-handle="left"></div>';
+      h += `<span class="bar-text">${esc(b.text)}</span><span class="bar-owners">${ownerBadges(b.owners)}</span>`;
+      if (ed) h += '<div class="resize-handle right" data-handle="right"></div>';
+      h += '</div></div>';
+      if (ed) h += ownerPicker('blocker', i, b.owners||[]);
+      h += '</div>';
+    });
+    if (ed) h += '<button class="add-row-btn" data-action="addBlocker">+ Add blocker</button>';
+    return h + '</div>';
+  }
+
+  function initDrag() {
+    document.querySelectorAll('.gantt-bar.admin-bar-item').forEach(bar => {
+      const leftH = bar.querySelector('.resize-handle.left');
+      const rightH = bar.querySelector('.resize-handle.right');
+      const track = bar.parentElement;
+      function getDay(clientX) { const rect = track.getBoundingClientRect(); return Math.max(0, Math.min(4, Math.floor((clientX - rect.left) / (rect.width / 5)))); }
+      function getItem() {
+        const type = bar.dataset.type, idx = parseInt(bar.dataset.index), w = gw(wk(weekOff));
+        if (type === 'win') return w.wins[idx]; if (type === 'task') return w.tasks[idx];
+        if (type === 'blocker') return w.blockers[idx]; if (type === 'next' || type === 'nextWeek') return w.nextWeek[idx];
+        return null;
+      }
+      if (leftH) leftH.addEventListener('mousedown', e => {
+        e.preventDefault(); e.stopPropagation(); const item = getItem(); if (!item) return;
+        const onMove = ev => { const d = getDay(ev.clientX); if (d <= (item.endDay!==undefined?item.endDay:4)) { item.startDay = d; bar.style.left = (d/5*100)+'%'; bar.style.width = (((item.endDay!==undefined?item.endDay:4)-d+1)/5*100)+'%'; } };
+        const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); save(); };
+        document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+      });
+      if (rightH) rightH.addEventListener('mousedown', e => {
+        e.preventDefault(); e.stopPropagation(); const item = getItem(); if (!item) return;
+        const onMove = ev => { const d = getDay(ev.clientX); if (d >= (item.startDay||0)) { item.endDay = d; bar.style.width = ((d-(item.startDay||0)+1)/5*100)+'%'; } };
+        const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); save(); };
+        document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+      });
+      bar.addEventListener('mousedown', e => {
+        if (e.target.dataset.handle) return; e.preventDefault();
+        const item = getItem(); if (!item) return;
+        const startX = e.clientX, origStart = item.startDay||0, origEnd = item.endDay!==undefined?item.endDay:4, span = origEnd - origStart;
+        const rect = track.getBoundingClientRect(), dayW = rect.width / 5;
+        const onMove = ev => {
+          const dayShift = Math.round((ev.clientX - startX) / dayW);
+          let ns = origStart + dayShift, ne = ns + span;
+          if (ns < 0) { ns = 0; ne = span; } if (ne > 4) { ne = 4; ns = 4 - span; }
+          item.startDay = ns; item.endDay = ne; bar.style.left = (ns/5*100)+'%'; bar.style.width = ((ne-ns+1)/5*100)+'%';
+        };
+        const onUp = () => { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); save(); };
+        document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', onUp);
+      });
+    });
+  }
+
+  const mainEl = document.getElementById('mainContent');
+  mainEl.addEventListener('click', hc);
+  mainEl.addEventListener('input', hi);
+  mainEl.addEventListener('change', hch);
+
+  function hc(e) {
+    const el = e.target.closest('[data-action]'); if (!el) return;
+    const a = el.dataset.action, key = wk(weekOff), w = gw(key), idx = parseInt(el.dataset.index);
+    switch (a) {
+      case 'addWin': w.wins.push({ text:'New win', owners:[], startDay:0, endDay:4 }); save(); render(); break;
+      case 'deleteWin': w.wins.splice(idx,1); save(); render(); break;
+      case 'addTask': w.tasks.push({ text:'New task', owners:[], done:false, blocked:false, startDay:0, endDay:4 }); save(); render(); break;
+      case 'deleteTask': w.tasks.splice(idx,1); save(); render(); break;
+      case 'toggleTask': {
+        if (!admin) return;
+        const wasDone = w.tasks[idx].done; w.tasks[idx].done = !wasDone;
+        if (w.tasks[idx].done) { w.tasks[idx].blocked = false; const rect = el.getBoundingClientRect(); spawnConfetti(rect.left + rect.width/2, rect.top); }
+        save(); render(); break;
+      }
+      case 'toggleBlocked': w.tasks[idx].blocked = !w.tasks[idx].blocked; if (w.tasks[idx].blocked) w.tasks[idx].done = false; save(); render(); break;
+      case 'addBlocker': w.blockers.push({ text:'New blocker', owners:[], startDay:0, endDay:4 }); save(); render(); break;
+      case 'deleteBlocker': w.blockers.splice(idx,1); save(); render(); break;
+      case 'addNextWeek': w.nextWeek.push({ text:'Planned item', owners:[], startDay:0, endDay:4 }); save(); render(); break;
+      case 'deleteNextWeek': w.nextWeek.splice(idx,1); save(); render(); break;
+      case 'toggleOwner': {
+        const type = el.dataset.type, mid = el.dataset.member;
+        let arr;
+        if (type==='win') arr=w.wins[idx]; else if (type==='task') arr=w.tasks[idx];
+        else if (type==='blocker') arr=w.blockers[idx]; else if (type==='nextWeek'||type==='next') arr=w.nextWeek[idx];
+        if (!arr) return; if (!arr.owners) arr.owners = [];
+        const oi = arr.owners.indexOf(mid);
+        if (oi >= 0) arr.owners.splice(oi,1); else arr.owners.push(mid);
+        save(); render(); break;
+      }
+    }
+  }
+  function hi(e) {
+    const el = e.target.closest('[data-action]'); if (!el) return;
+    const a = el.dataset.action, key = wk(weekOff), w = gw(key), idx = parseInt(el.dataset.index), txt = el.textContent.trim();
+    switch (a) {
+      case 'editSummary': w.summary = txt; break;
+      case 'editWin': w.wins[idx].text = txt; break;
+      case 'editTask': w.tasks[idx].text = txt; break;
+      case 'editBlocker': w.blockers[idx].text = txt; break;
+      case 'editNextWeek': w.nextWeek[idx].text = txt; break;
+    }
+    save();
+  }
+  function hch(e) {
+    const el = e.target.closest('[data-action]'); if (!el) return;
+    if (el.dataset.action === 'changeStatus') { gw(wk(weekOff)).status = el.value; save(); render(); }
+  }
+
+  document.getElementById('prevWeek').addEventListener('click', () => { if (weekOff > getMinWeek()) { weekOff--; toggleDropdown(false); render(); } });
+  document.getElementById('nextWeek').addEventListener('click', () => { if (weekOff < getMaxWeek()) { weekOff++; toggleDropdown(false); render(); } });
+  document.getElementById('adminToggle').addEventListener('click', () => {
+    if (admin) { admin = false; weekOff = Math.min(weekOff, 0); toggleDropdown(false); render(); }
+    else spm();
+  });
+  document.getElementById('downloadPdf').addEventListener('click', () => {
+    buildReport();
+    setTimeout(() => window.print(), 50);
+  });
+
+  let pinStepNum = 1;
+  function spm() {
+    pinStepNum = 1;
+    const o = document.getElementById('pinModal');
+    document.getElementById('pinStep1').style.display = '';
+    document.getElementById('pinStep2').style.display = 'none';
+    document.getElementById('pinModalTitle').textContent = 'Admin Access';
+    document.getElementById('pinModalSub').textContent = 'Enter 6-digit PIN to edit';
+    document.getElementById('pinSubmit').textContent = 'Unlock';
+    document.getElementById('patInput').value = '';
+    o.classList.add('show');
+    const inp = o.querySelectorAll('.pin-digit');
+    inp.forEach(i => { i.value = ''; i.classList.remove('error'); });
+    setTimeout(() => inp[0].focus(), 100);
+  }
+  function hpm() { document.getElementById('pinModal').classList.remove('show'); }
+
+  const pi = document.querySelectorAll('#pinRow .pin-digit');
+  pi.forEach((inp, i) => {
+    inp.addEventListener('input', () => {
+      inp.value = inp.value.replace(/\D/g, '').slice(-1);
+      if (inp.value && i < PIN_LENGTH - 1) pi[i + 1].focus();
+      if (inp.value && i === PIN_LENGTH - 1) setTimeout(() => tu(), 50);
+    });
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !inp.value && i > 0) pi[i - 1].focus();
+      if (e.key === 'Enter') tu();
+    });
+  });
+  document.getElementById('pinSubmit').addEventListener('click', tu);
+  document.getElementById('patInput').addEventListener('keydown', e => { if (e.key === 'Enter') tu(); });
+  document.getElementById('pinCancel').addEventListener('click', hpm);
+  document.getElementById('pinModal').addEventListener('click', e => { if (e.target === e.currentTarget) hpm(); });
+
+  function tu() {
+    if (pinStepNum === 1) {
+      const pin = Array.from(pi).map(i => i.value).join('');
+      if (pin !== ADMIN_PIN) { pi.forEach(i => i.classList.add('error')); setTimeout(() => pi.forEach(i => { i.classList.remove('error'); i.value = ''; }), 500); pi[0].focus(); return; }
+      if (getGistToken()) { admin = true; hpm(); render(); return; }
+      pinStepNum = 2;
+      document.getElementById('pinStep1').style.display = 'none';
+      document.getElementById('pinStep2').style.display = '';
+      document.getElementById('pinModalTitle').textContent = 'GitHub Token';
+      document.getElementById('pinModalSub').textContent = 'Paste your Personal Access Token (gist scope)';
+      document.getElementById('pinSubmit').textContent = 'Save & Continue';
+      setTimeout(() => document.getElementById('patInput').focus(), 100);
+    } else {
+      const tok = document.getElementById('patInput').value.trim();
+      if (!tok) { document.getElementById('patInput').style.borderColor = 'var(--red)'; setTimeout(() => document.getElementById('patInput').style.borderColor = '', 800); return; }
+      setGistToken(tok); admin = true; hpm(); render();
+    }
+  }
+
+  async function init() {
+    allData = lc(); weekOff = 0;
+    let dirty = migrateSundayKeys();
+    if (purgePreKickoff()) dirty = true;
+    if (dirty) sc();
+    render();
+    if (gistOk) {
+      const gd = await lg();
+      if (gd === null) {
+        // fetch failed -- keep localStorage as-is
+      } else if (Object.keys(gd).length > 0) {
+        const localKeys = Object.keys(allData);
+        const gistKeys = Object.keys(gd);
+        const merged = {};
+        const allKeys = new Set([...gistKeys, ...localKeys]);
+        for (const k of allKeys) {
+          const lv = allData[k], gv = gd[k];
+          if (!lv) { merged[k] = gv; continue; }
+          if (!gv) { merged[k] = lv; continue; }
+          if (dirtyKeys.has(k)) { merged[k] = lv; continue; }
+          const lts = lv._ts || 0, gts = gv._ts || 0;
+          merged[k] = (gts > lts) ? gv : lv;
+        }
+        allData = merged;
+        const migrated = migrateSundayKeys();
+        const purged = purgePreKickoff();
+        sc(); render();
+        if (migrated || purged || localKeys.some(k => !gistKeys.includes(k))) sg();
+      } else if (Object.keys(allData).length > 0) {
+        await sg();
+      }
+    }
+  }
+  // Project kickoff: Mon Feb 16, 2026 = Week 1
+  const KICKOFF = new Date(2026, 1, 23);
+  function projectWeekNum(startDate) {
+    return Math.round((startDate - KICKOFF) / (7 * 86400000)) + 1;
+  }
+  function getLogoSrcs() {
+    const out = [];
+    document.querySelectorAll('.brand-marks img').forEach(img => out.push(img.src));
+    return out;
+  }
+  function buildReport() {
+    const host = document.getElementById('report');
+    const keys = Object.keys(allData).sort(); // ascending by date
+    const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const today = new Date();
+    let firstDate = null, lastDate = null;
+    if (keys.length) {
+      firstDate = new Date(keys[0] + 'T00:00:00');
+      const last = new Date(keys[keys.length - 1] + 'T00:00:00'); last.setDate(last.getDate() + 4);
+      lastDate = last;
+    }
+    const range = firstDate ? `${fmt(firstDate)} -- ${fmt(lastDate)}` : 'No data tracked yet';
+    const logos = getLogoSrcs();
+    const logoHtml = logos.length
+      ? `<div class="rpt-logos">${logos.map((s, i) => `${i > 0 ? '<div class="rpt-logo-sep"></div>' : ''}<img src="${s}" alt="logo">`).join('')}</div>`
+      : '';
+    let h = `<div class="rpt-cover">
+      ${logoHtml}
+      <div class="rpt-cover-text">
+        <h1 class="rpt-title">SIOP Progress Report</h1>
+        <div class="rpt-sub">${range}</div>
+        <div class="rpt-meta">${keys.length} week${keys.length === 1 ? '' : 's'} tracked -- generated ${fmt(today)}</div>
+      </div>
+    </div>`;
+    if (!keys.length) {
+      h += `<p style="color:#888;font-size:11px;">Nothing to report.</p>`;
+    }
+    for (const k of keys) {
+      const w = allData[k];
+      const start = new Date(k + 'T00:00:00');
+      const end = new Date(start); end.setDate(end.getDate() + 4);
+      const wn = projectWeekNum(start);
+      let status = (w.status || 'green').toLowerCase();
+      if (status === 'amber' || status === 'yellow') status = 'red';
+      const statusLabel = status === 'red' ? 'Delayed' : 'On Track';
+      const m = cm(w);
+      const list = (arr, opts = {}) => {
+        if (!arr || !arr.length) return `<ul><li class="rpt-empty">--</li></ul>`;
+        return `<ul>${arr.map(it => {
+          const cls = opts.tasks && it.done ? ' class="done"' : '';
+          return `<li${cls}>${esc(it.text || '')}</li>`;
+        }).join('')}</ul>`;
+      };
+      h += `<div class="rpt-week ${status}">
+        <div class="rpt-week-head">
+          <div>
+            <span class="rpt-week-title">Week ${wn}</span>
+            <span class="rpt-week-dates"> &middot; ${fmt(start)} -- ${fmt(end)}</span>
+          </div>
+          <span class="rpt-status ${status}">${statusLabel}</span>
+        </div>
+        ${w.summary ? `<div class="rpt-summary">${esc(w.summary)}</div>` : ''}
+        <div class="rpt-metrics">
+          <span class="m-wins"><b>${m.wins}</b> wins</span>
+          <span class="m-completed"><b>${m.completed}</b> completed</span>
+          <span class="m-progress"><b>${m.inProgress}</b> in progress</span>
+          <span class="m-blocked"><b>${m.blocked}</b> blocked</span>
+        </div>
+        <div class="rpt-grid">
+          <div class="rpt-section s-wins"><h4>Wins</h4>${list(w.wins)}</div>
+          <div class="rpt-section s-tasks"><h4>Tasks</h4>${list(w.tasks, { tasks: true })}</div>
+          <div class="rpt-section s-blockers"><h4>Blockers</h4>${list(w.blockers)}</div>
+        </div>
+      </div>`;
+    }
+    host.innerHTML = h;
+  }
+
+  init();
+</script>
+<div id="report"></div>
+</body>
+</html>
